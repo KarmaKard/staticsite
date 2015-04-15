@@ -515,45 +515,32 @@
     <script type="text/javascript" src="js/shortcodes.js"></script>     
     <script type="text/javascript" src="js/scripts.js"></script>            
     <script type="text/javascript">
+      var daysleft = document.getElementById('days');
+      var hoursleft = document.getElementById('hours');
+      var minutesleft = document.getElementById('minutes');
+      var secondsleft = document.getElementById('seconds');
+
       function updateTimeSpan() {
-        var daysleft = document.getElementById('days');
-        var hoursleft = document.getElementById('hours');
-        var minutesleft = document.getElementById('minutes');
-        var secondsleft = document.getElementById('seconds');
-        var d = new Date("September 1, 2015 00:00:00");
-        var t = new Date();
-        var ms;
-        var s, m, h;
+        var launchTime = new Date("September 1, 2015 00:00:00");
+        var now = new Date();
+        var ms = launchTime - now;
 
-        // if it's after midnight, set today to tomorrow    
-        // if (d.getHours() < 1){ d.setDate(d.getDate() + 1); }
-        // get the next monday    
-        // while (d.getDay() != 1){ d.setDate(d.getDate() + 1); }
-        // set the time    
+        var numDays = parseInt(ms / (1000 * 60 * 60 * 24));
+        ms -= (numDays * 1000 * 60 * 60 * 24);
+        var numHours = parseInt(ms / (1000 * 60 * 60));
+        ms -= (numHours * 1000 * 60 * 60);
+        var numMins = parseInt(ms / (1000 * 60));
+        ms -= (numMins * 1000 * 60);
+        var numSecs = parseInt(ms / 1000);
 
-        // get the difference between right now and next monday    
-        ms = d - t;
-        // get the days between now and then    
-        d = parseInt(ms / (1000 * 60 * 60 * 24));
-        ms -= (d * 1000 * 60 * 60 * 24);
-        // get hours    
-        h = parseInt(ms / (1000 * 60 * 60));
-        ms -= (h * 1000 * 60 * 60);
-        // get minutes    
-        m = parseInt(ms / (1000 * 60));
-        ms -= (m * 1000 * 60);
-        // get seconds    
-        s = parseInt(ms / 1000);
-
-
-        daysleft.innerHTML = d;
-        hoursleft.innerHTML = h; 
-        minutesleft.innerHTML = m; 
-        secondsleft.innerHTML = s;
-        setTimeout('updateTimeSpan()', 100);
+        daysleft.innerHTML = numDays;
+        hoursleft.innerHTML = numHours; 
+        minutesleft.innerHTML = numMins; 
+        secondsleft.innerHTML = numSecs;
+        setTimeout('updateTimeSpan()', 1000);
       }
 
-      onload = updateTimeSpan();
+      window.onload = updateTimeSpan();
     </script>
   </body>
 </html>
